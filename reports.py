@@ -14,4 +14,3 @@ if __name__ == "__main__":
 
     result = reports_db_helper.get_risk_days()
     reports_file_helper.create_risk_days_report(result)
-    

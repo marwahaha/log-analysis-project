@@ -13,10 +13,11 @@ POPULAR_ARTICLES_COLUMNS = ["Article Name", "Total of Views"]
 POPULAR_AUTHORS_COLUMNS = ["Author Name", "Total of Views"]
 RISK_DAYS_COLUMNS = ["Day", "Errors Percentage"]
 
+
 def create_reports_dir():
-    try:  
+    try:
         os.mkdir(REPORTS_FOLDER)
-    except OSError:  
+    except OSError:
         print ("Creation of the directory %s failed" % REPORTS_FOLDER)
 
 
@@ -37,13 +38,14 @@ def create_report(columns, rows):
 
     for record in rows:
         report.add_row(record)
-    
+
     return report
 
 
 def create_popular_articles_report(popularArticles):
     report = create_report(POPULAR_ARTICLES_COLUMNS, popularArticles)
     save_report(report, REPORT_POPULAR_ARTICLES_FILE)
+
 
 def create_popular_authors_report(popularAuthors):
     report = create_report(POPULAR_AUTHORS_COLUMNS, popularAuthors)

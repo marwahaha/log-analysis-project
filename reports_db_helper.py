@@ -4,19 +4,23 @@ import psycopg2
 
 DATABASE_NAME = "news"
 
-POPULAR_ARTICLES_QUERY="""
+# Query to retrieve the 3 most viewed articles
+POPULAR_ARTICLES_QUERY = """
     SELECT articles.title, count(articles.slug) AS total
     FROM log, articles
     WHERE log.path LIKE CONCAT('%', articles.slug, '%')
     GROUP BY articles.title ORDER BY total DESC LIMIT 3;"""
 
-POPULAR_AUTHORS_QUERY="""
+# Query to retrieve the 3 most viewed articles
+POPULAR_AUTHORS_QUERY = """
     SELECT authorship.author, COUNT(authorship.article) AS views
     FROM authorship, log
     WHERE log.path LIKE CONCAT('%', authorship.article, '%')
     GROUP BY authorship.author ORDER BY views DESC;"""
 
-RISK_DAYS_QUERY="""
+# Query to retrieve the most risk days according with to the number of errors
+# in requests to the server.
+RISK_DAYS_QUERY = """
     SELECT day, percentageErrors
     FROM (
         SELECT DailyStatus.day,
@@ -27,6 +31,7 @@ RISK_DAYS_QUERY="""
         WHERE percentageErrors > 1.0;"""
 
 db_connection = None
+
 
 def connect():
     global db_connection
