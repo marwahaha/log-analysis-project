@@ -27,9 +27,9 @@ To execute the project, please run the following command on a terminal:
 python reports.py
 ```
 **NOTE**: A reports folder will be created on the projects root directory. There will be three reports, one per question.
-Question 1 - <log-analysis-project>/report_popular_articles.txt
-Question 2 - <log-analysis-project>/report_popular_authors.txt
-Question 3 - <log-analysis-project>/report_risk_days.txt
+* Question 1: <log-analysis-project>/reports/report_popular_articles.txt
+* Question 2: - <log-analysis-project>/reports/report_popular_authors.txt
+* Question 3: - <log-analysis-project>/reports/report_risk_days.txt
 
 ## License
 This project is distributed under [MIT License](https://opensource.org/licenses/MIT)
