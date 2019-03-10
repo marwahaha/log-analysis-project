@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/env python
 
 import psycopg2
 
@@ -8,14 +8,14 @@ DATABASE_NAME = "news"
 POPULAR_ARTICLES_QUERY = """
     SELECT articles.title, count(articles.slug) AS total
     FROM log, articles
-    WHERE log.path LIKE CONCAT('%', articles.slug, '%')
+    WHERE log.path = CONCAT('/article/', articles.slug)
     GROUP BY articles.title ORDER BY total DESC LIMIT 3;"""
 
 # Query to retrieve the 3 most viewed articles
 POPULAR_AUTHORS_QUERY = """
     SELECT authorship.author, COUNT(authorship.article) AS views
     FROM authorship, log
-    WHERE log.path LIKE CONCAT('%', authorship.article, '%')
+    WHERE log.path = CONCAT('/article/', authorship.article)
     GROUP BY authorship.author ORDER BY views DESC;"""
 
 # Query to retrieve the most risk days according with to the number of errors
@@ -23,12 +23,12 @@ POPULAR_AUTHORS_QUERY = """
 RISK_DAYS_QUERY = """
     SELECT day, percentageErrors
     FROM (
-        SELECT DailyStatus.day,
-               ((DailyStatusErr.tStatusErr / DailyStatus.tStatus) * 100)
-               AS percentageErrors
+        SELECT DailyStatus.day, ROUND(
+            CAST(((DailyStatusErr.tStatusErr / DailyStatus.tStatus) * 100)
+            AS NUMERIC), 2) AS percentageErrors
         FROM DailyStatus, DailyStatusErr
         WHERE DailyStatus.day = DailyStatusErr.day) AS riskDays
-        WHERE percentageErrors > 1.0;"""
+    WHERE percentageErrors > 1.0;"""
 
 db_connection = None
 
